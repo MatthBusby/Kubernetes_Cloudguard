@@ -22,8 +22,7 @@ spec:
         ports:
         - containerPort: 3000
           name: {{.Values.appname}}
-        securityContext:
-            add: ["SYS_ADMIN"]
+
 ---
 
 apiVersion: v1
@@ -47,13 +46,9 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: ingress-configuration
-    annotations :
-      kubernetes.io/ingress.class : nginx
-      nginx.ingress.kubernetes.io/ssl-redirect : false
-      nginx.ingress.kubernetes.io/rewrite-target : /
 spec:
   rules:
-  - host: {{.Values.appURL}}
+  - host: {{.Values.appurl}}
     http:
       paths:
       - path: /
