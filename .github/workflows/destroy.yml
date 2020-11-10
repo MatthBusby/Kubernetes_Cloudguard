@@ -27,7 +27,7 @@ jobs:
  #Checkout code from repository
      - name: Checkout Code
        uses: actions/checkout@v1 
- #Create Azure Resource Group,and build AKS Cluster
+ #Delete Azure Resource Group,and build AKS Cluster
      - name: Configure Azure Environment
        run: |
          location_lower=$(echo "${AZ_LOCATION}" | awk '{print tolower($0)}')
@@ -36,4 +36,11 @@ jobs:
          az aks delete --name ${CLUSTER_NAME} --resource-group ${AZ_RG} -y
          az group delete -n ${AZ_RG} -y
        timeout-minutes: 30  
-
+ #Delete Azure Resource Group,and build AKS Cluster
+ 
+# DO NOT USE IF YOU ALREADY HAVE A KUBERNETES CLUSTER
+     - name: Remove Kubernetes cluster to Cloudguard CSPM
+       run: |
+        org_id=$(curl -X GET https://api.dome9.com/v2/organizationalunit/view --basic -u ${CSPM_TOKEN} -H 'Accept: application/json' | jq .children[0] | jq .id)
+        k8_id=$(curl -X GET https://api.dome9.com/v2/organizationalunit/cloudaccounts?id=${org_id} --basic -u ${CSPM_TOKEN}  -H 'Accept: application/json' | jq .[] | jq .kubernetes[])
+        curl -X DELETE https://api.dome9.com/v2/KubernetesAccount/$k8_id --basic -u ${CSPM_TOKEN}

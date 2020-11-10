@@ -50,12 +50,11 @@ jobs:
           helm package cloudguard_demo_chart/
           helm install juicewaap /home/runner/work/Kubernetes_Cloudguard/Kubernetes_Cloudguard/cloudguard_demo_chart-0.1.0.tgz --set token=${WAAP_TOKEN} --set appname=${NAMESPACE} --set urlsuffix=${URL_SUFFIX} --set location=${location_lower} --create-namespace --namespace ${NAMESPACE}
 
-#THIS WILL ONLY WORK IF YOU HAVE A SINGLE AZURE TENANT IN DOME9
+# DO NOT USE IF YOU ALREADY HAVE A KUBERNETES CLUSTER
      - name: Add Kubernetes cluster to Cloudguard CSPM
        run: |
-        org_id=$(curl -X GET https://api.dome9.com/v2/organizationalunit/view --basic -u  ${CSPM_TOKEN} -H 'Accept: application/json' | jq .children[0] | jq .id)
-        echo $org_id
+        org_id=$(curl -X GET https://api.dome9.com/v2/organizationalunit/view --basic -u ${CSPM_TOKEN} -H 'Accept: application/json' | jq .children[0] | jq .id)
         k8_json=$(curl -X POST https://api.dome9.com/v2/KubernetesAccount  --basic -u ${CSPM_TOKEN} -H  'Content-Type: application/json' -H 'Accept: application/json' --data  "{\"name\" : \"${K8_CSPM_NAME}\", "organizationalUnitId" : ${org_id}}")
-        echo $k8_json
+        
     
 
