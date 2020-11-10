@@ -46,7 +46,7 @@ jobs:
        run: |
           az aks get-credentials --name ${CLUSTER_NAME} --resource-group ${AZ_RG}
           helm package cloudguard_demo_chart/
-          helm install juicewaap cloudguard_demo_chart-0.1.0.tgz --set token=${WAAP_TOKEN} --set appname=${NAMESPACE} --set urlsuffix=${URL_SUFFIX} --set location=${location_lower} --create-namespace --namespace ${NAMESPACE}
+          helm install juicewaap /home/runner/work/Kubernetes_Cloudguard/Kubernetes_Cloudguard/cloudguard_demo_chart-0.1.0.tgz --set token=${WAAP_TOKEN} --set appname=${NAMESPACE} --set urlsuffix=${URL_SUFFIX} --set location=${location_lower} --create-namespace --namespace ${NAMESPACE}
 
 #THIS WILL ONLY WORK IF YOU HAVE A SINGLE AZURE TENANT IN DOME9
      - name: Add Kubernetes cluster to Cloudguard CSPM
