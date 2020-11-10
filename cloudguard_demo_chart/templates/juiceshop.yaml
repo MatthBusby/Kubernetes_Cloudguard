@@ -52,7 +52,7 @@ metadata:
     
 spec:
   rules:
-  - host: {{.Values.appurl}}
+  - host: {{ .Release.Namespace }}.{{ .Values.location }}.{{ .Values.urlsuffix }} 
     http:
       paths:
       - path: /
