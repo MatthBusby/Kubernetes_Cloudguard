@@ -11,7 +11,8 @@ jobs:
      env:
       working-directory: .
       WAAP_TOKEN: ${{ secrets.CG_TOKEN }}
-      CSPM_TOKEN: ${{ secrets.CSPM_TOKEN }}
+      CSPM_API: ${{ secrets.CSPM_API }}
+      CSPM_SECRET: ${{ secrets.CSPM_SECRET }}
       AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
@@ -42,9 +43,9 @@ jobs:
 # DO NOT USE IF YOU ALREADY HAVE A KUBERNETES CLUSTER
      - name: Remove Kubernetes cluster to Cloudguard CSPM
        run: |
-        org_id=$(curl -X GET https://api.dome9.com/v2/organizationalunit/view --basic -u ${CSPM_TOKEN} -H 'Accept: application/json' | jq .children[0] | jq .id)
+        org_id=$(curl -X GET https://api.dome9.com/v2/organizationalunit/view --basic -u ${CSPM_API}:${CSPM_SECRET} -H 'Accept: application/json' | jq .children[0] | jq .id)
         org_id=$(echo "${org_id}" | sed -e 's/^"//' -e 's/"$//')
         echo $org_id
-        k8_id=$(curl -X GET https://api.dome9.com/v2/organizationalunit/cloudaccounts?id=${org_id} --basic -u ${CSPM_TOKEN}  -H 'Accept: application/json' | jq .[] | jq .kubernetes[])
+        k8_id=$(curl -X GET https://api.dome9.com/v2/organizationalunit/cloudaccounts?id=${org_id} --basic -u ${CSPM_API}:${CSPM_SECRET}  -H 'Accept: application/json' | jq .[] | jq .kubernetes[])
         k8_id=$(echo "${k8_id}" | sed -e 's/^"//' -e 's/"$//')
-        curl -X DELETE https://api.dome9.com/v2/KubernetesAccount/${k8_id} --basic -u ${CSPM_TOKEN}
+        curl -X DELETE https://api.dome9.com/v2/KubernetesAccount/${k8_id} --basic -u ${CSPM_API}:${CSPM_SECRET}
