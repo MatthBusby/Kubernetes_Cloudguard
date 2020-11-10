@@ -10,7 +10,8 @@ jobs:
      runs-on: ubuntu-latest
      env:
       working-directory: .
-      TOKEN: ${{ secrets.CG_TOKEN }}
+      WAAP_TOKEN: ${{ secrets.CG_TOKEN }}
+      CSPM_TOKEN: ${{ secrets.CSPMkub_TOKEN }}
       AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
@@ -21,6 +22,9 @@ jobs:
       CLUSTER_NAME: ${{ secrets.CLUSTER_NAME }
      
      steps: 
+ #Checkout code from repository
+     - name: Checkout Code
+       uses: actions/checkout@v1 
  #Create Azure Resource Group,and build AKS Cluster
      - name: Configure Azure Environment
        run: |
@@ -29,4 +33,16 @@ jobs:
          az login  --service-principal -u ${AZURE_CLIENT_ID} -p ${AZURE_CLIENT_SECRET} -t ${AZURE_TENANT_ID}
          az group create -n ${AZ_RG} -l ${location_lower}
          az aks create --name ${CLUSTER_NAME} --resource-group  ${AZ_RG} -p ${DNS_PREFIX} --node-count 3
+         az aks get-credentials --name ${CLUSTER_NAME} --resource-group ${AZ_RG}
+       timeout-minutes: 30  
+
+#Install Helm
+     - uses: azure/setup-helm@v1
+       id: install       
+
+#Package and Install Helm Chart for Juice SHop + WAAP
+     - name: Deploy Helm Chart of APP
+       run: |
+          helm package /cloudguard_demo_chart
+          
        timeout-minutes: 30   
