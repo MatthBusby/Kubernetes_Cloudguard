@@ -52,6 +52,6 @@ jobs:
     - name: Add Kubernetes cluster to Cloudguard CSPM
       run: |
         org_id=$(curl -X GET https://api.dome9.com/v2/organizationalunit/view --basic -u  ${CHKP_CLOUDGUARD_ID}:${CHKP_CLOUDGUARD_SECRET} -H 'Accept: application/json' | jq .children[0] | jq .id)
-        k8_json=$(curl -X POST https://api.dome9.com/v2/KubernetesAccount  --basic -u {CHKP_CLOUDGUARD_ID}:${CHKP_CLOUDGUARD_SECRET} -H  'Content-Type: application/json' -H 'Accept: application/json' --data  "{\"name\" : \"${K8_CSPM_NAME}\", "organizationalUnitId" : ${org_ id}}")
+        k8_json=$(curl -X POST https://api.dome9.com/v2/KubernetesAccount  --basic -u {CHKP_CLOUDGUARD_ID}:${CHKP_CLOUDGUARD_SECRET} -H  'Content-Type: application/json' -H 'Accept: application/json' --data  "{\"name\" : \"${K8_CSPM_NAME}\", "organizationalUnitId" : ${org_id}}")
     
 
