@@ -1,0 +1,32 @@
+name: Build
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - '_build_flag'
+jobs:
+  build: 
+     runs-on: ubuntu-latest
+     env:
+      working-directory: .
+      TOKEN: ${{ secrets.CG_TOKEN }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      AZ_RG: ${{ secrets.AZ_RG }}
+      AZ_LOCATION: ${{ secrets.AZ_LOCATION }}
+      DNS_PREFIX: ${{ secrets.DNS_PREFIX }}
+      CLUSTER_NAME: ${{ secrets.CLUSTER_NAME }
+     
+     steps: 
+ #Create Azure Resource Group,and build AKS Cluster
+     - name: Configure Azure Environment
+       run: |
+         location_lower=$(echo "${AZ_LOCATION}" | awk '{print tolower($0)}')
+         location_lower="$(echo -e "$location_lower" | tr -d '[:space:]')"
+         az login  --service-principal -u ${AZURE_CLIENT_ID} -p ${AZURE_CLIENT_SECRET} -t ${AZURE_TENANT_ID}
+         az group create -n ${AZ_RG} -l ${location_lower}
+         az aks create --name ${CLUSTER_NAME} --resource-group  ${AZ_RG} -p ${DNS_PREFIX} --node-count 3
+       timeout-minutes: 30   
