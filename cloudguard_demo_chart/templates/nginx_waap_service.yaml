@@ -8,7 +8,7 @@ metadata:
   name: nginx-ingress-controller-service
   namespace: {{ .Release.Namespace }} 
   annotations: 
-    service.beta.kubernetes.io/azure-dns-label-name: {{ .Release.Namespace }}
+    service.beta.kubernetes.io/azure-dns-label-name: {{.Values.appurl}}
 
 spec:
   type: LoadBalancer 
