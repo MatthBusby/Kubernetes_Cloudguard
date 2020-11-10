@@ -43,5 +43,6 @@ jobs:
      - name: Remove Kubernetes cluster to Cloudguard CSPM
        run: |
         org_id=$(curl -X GET https://api.dome9.com/v2/organizationalunit/view --basic -u ${CSPM_TOKEN} -H 'Accept: application/json' | jq .children[0] | jq .id)
+        org_id=$(echo "${org_id}" | sed -e 's/^"//' -e 's/"$//')
         k8_id=$(curl -X GET https://api.dome9.com/v2/organizationalunit/cloudaccounts?id=${org_id} --basic -u ${CSPM_TOKEN}  -H 'Accept: application/json' | jq .[] | jq .kubernetes[])
         curl -X DELETE https://api.dome9.com/v2/KubernetesAccount/$k8_id --basic -u ${CSPM_TOKEN}
