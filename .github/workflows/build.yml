@@ -33,7 +33,6 @@ jobs:
          az login  --service-principal -u ${AZURE_CLIENT_ID} -p ${AZURE_CLIENT_SECRET} -t ${AZURE_TENANT_ID}
          az group create -n ${AZ_RG} -l ${location_lower}
          az aks create --name ${CLUSTER_NAME} --resource-group  ${AZ_RG} -p ${DNS_PREFIX} --node-count 3
-         az aks get-credentials --name ${CLUSTER_NAME} --resource-group ${AZ_RG}
        timeout-minutes: 30  
 
 #Install Helm
@@ -43,6 +42,7 @@ jobs:
 #Package and Install Helm Chart for Juice SHop + WAAP
      - name: Deploy Helm Chart of APP
        run: |
+          az aks get-credentials --name ${CLUSTER_NAME} --resource-group ${AZ_RG}
           helm package /cloudguard_demo_chart
           
        timeout-minutes: 30   
