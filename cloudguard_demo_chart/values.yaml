@@ -16,8 +16,8 @@ image:
 
 #Juice SHop App Info
 appname: "Insert Unique App Name Here"
-urlsuffix: "cloudapp.azure.com"
-location: "westus2"
+urlsuffix: ""
+location: ""
 
 imagePullSecrets: []
 nameOverride: "cpnano"
