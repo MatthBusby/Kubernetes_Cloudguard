@@ -6,7 +6,7 @@ replicaCount: 1
 juiceReplicaCount: 3
 
 #Check Point WAAP Agent Token 
-token: "Insert token here"
+token: ""
 
 #Check Point Container Images
 image:
@@ -15,7 +15,7 @@ image:
   juiceimage: "bkimminich/juice-shop"
 
 #Juice SHop App Info
-appname: "Insert Unique App Name Here"
+appname: ""
 urlsuffix: ""
 location: ""
 
