@@ -23,6 +23,7 @@ jobs:
       CLUSTER_NAME: ${{ secrets.CLUSTER_NAME }}
       K8_CSPM_NAME: ${{ secrets.K8_CSPM_NAME }}
       NAMESPACE: ${{ secrets.NAMESPACE }}
+      ORG_NAME: "WAAP_JUICE_K8"
      
      steps: 
  #Checkout code from repository
@@ -54,9 +55,9 @@ jobs:
 # DO NOT USE IF YOU ALREADY HAVE A KUBERNETES CLUSTER
      - name: Add Kubernetes cluster to Cloudguard CSPM
        run: |
-        org_id=$(curl -X GET https://api.dome9.com/v2/organizationalunit/view --basic -u ${CSPM_API}:${CSPM_SECRET} -H 'Accept: application/json' | jq .children[0] | jq .id)
+        parent_org_id=$(curl -X GET https://api.dome9.com/v2/organizationalunit/view --basic -u ${CSPM_API}:${CSPM_SECRET} -H 'Accept: application/json' | jq '.| select(.name=="Check Point")' | jq .id)
+        org_id=$(url -X POST https://api.dome9.com/v2/OrganizationalUnit --basic -u ${CSPM_API}:${CSPM_SECRET} -H 'Content-Type: application/json' --data  "{\"name\" : \"${ORG_NAME}\", "parentId" : ${parent_org_id}}" |jq .item | jq .id)
         k8_id=$(curl -X POST https://api.dome9.com/v2/KubernetesAccount  --basic -u ${CSPM_API}:${CSPM_SECRET} -H  'Content-Type: application/json' -H 'Accept: application/json' --data  "{\"name\" : \"${K8_CSPM_NAME}\", "organizationalUnitId" : ${org_id}}" | jq .id)
-        echo ${k8_id}
         k8_id=$(echo "${k8_id}" | sed -e 's/^"//' -e 's/"$//')
         helm repo add checkpoint-ea https://raw.githubusercontent.com/CheckPointSW/charts/ea/repository/
         helm install asset-mgmt checkpoint-ea/cp-resource-management --set-string credentials.user=${CSPM_API} --set-string credentials.secret=${CSPM_SECRET} --set-string clusterID=${k8_id} --set addons.imageUploader.enabled=true --set addons.flowLogs.enabled=true   --namespace ${NAMESPACE} --create-namespace
