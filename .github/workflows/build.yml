@@ -56,7 +56,7 @@ jobs:
      - name: Add Kubernetes cluster to Cloudguard CSPM
        run: |
         parent_org_id=$(curl -X GET https://api.dome9.com/v2/organizationalunit/view --basic -u ${CSPM_API}:${CSPM_SECRET} -H 'Accept: application/json' | jq '.| select(.name=="Check Point")' | jq .id)
-        org_id=$(url -X POST https://api.dome9.com/v2/OrganizationalUnit --basic -u ${CSPM_API}:${CSPM_SECRET} -H 'Content-Type: application/json' --data  "{\"name\" : \"${ORG_NAME}\", "parentId" : ${parent_org_id}}" |jq .item | jq .id)
+        org_id=$(curl -X POST https://api.dome9.com/v2/OrganizationalUnit --basic -u ${CSPM_API}:${CSPM_SECRET} -H 'Content-Type: application/json' --data  "{\"name\" : \"${ORG_NAME}\", "parentId" : ${parent_org_id}}" |jq .item | jq .id)
         k8_id=$(curl -X POST https://api.dome9.com/v2/KubernetesAccount  --basic -u ${CSPM_API}:${CSPM_SECRET} -H  'Content-Type: application/json' -H 'Accept: application/json' --data  "{\"name\" : \"${K8_CSPM_NAME}\", "organizationalUnitId" : ${org_id}}" | jq .id)
         k8_id=$(echo "${k8_id}" | sed -e 's/^"//' -e 's/"$//')
         helm repo add checkpoint-ea https://raw.githubusercontent.com/CheckPointSW/charts/ea/repository/
