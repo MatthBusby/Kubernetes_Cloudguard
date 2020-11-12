@@ -41,7 +41,7 @@ jobs:
        continue-on-error: true
  #Delete Azure Resource Group,and build AKS Cluster
  
-# DO NOT USE IF YOU ALREADY HAVE A KUBERNETES CLUSTER
+# DESIGNED FOR CHECK POINT SEs
      - name: Remove Kubernetes cluster to Cloudguard CSPM
        run: |
         org_id=$(curl -X GET https://api.dome9.com/v2/organizationalunit/view --basic -u ${CSPM_API}:${CSPM_SECRET} -H 'Accept: application/json' | jq .[] | jq ".[] | select(.name==\"${ORG_NAME}\")" | jq .id)

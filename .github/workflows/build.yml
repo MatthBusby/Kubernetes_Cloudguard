@@ -52,7 +52,7 @@ jobs:
           helm package cloudguard_demo_chart/
           helm install juicewaap /home/runner/work/Kubernetes_Cloudguard/Kubernetes_Cloudguard/cloudguard_demo_chart-0.1.0.tgz --set token=${WAAP_TOKEN} --set appname=${NAMESPACE} --set urlsuffix=${URL_SUFFIX} --set location=${location_lower} --create-namespace --namespace ${NAMESPACE}
 
-# DO NOT USE IF YOU ALREADY HAVE A KUBERNETES CLUSTER
+# DESIGNED FOR CHECK POINT SEs
      - name: Add Kubernetes cluster to Cloudguard CSPM
        run: |
         parent_org_id=$(curl -X GET https://api.dome9.com/v2/organizationalunit/view --basic -u ${CSPM_API}:${CSPM_SECRET} -H 'Accept: application/json' | jq '.| select(.name=="Check Point") | .id')
