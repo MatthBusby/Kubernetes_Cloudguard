@@ -1,6 +1,12 @@
 # Kubernetes + Cloudguard
 Written by Michael Braun
 
+![CI](https://github.com/metalstormbass/Kubenetes_Cloudguard/workflows/build/badge.svg?event=push)
+
+<p align="left">
+    <img src="https://img.shields.io/badge/Version-1.0.0-green" />
+</p>    
+
 This is a Helm Chart that deploys the OWASP Juice Shop application and Cloudguard WAAP. <br>
 
 <b>Credit to Mark Nichols for assisting me with Helm.</b> I "borrowed" a lot from his project, located [HERE](https://github.com/mnichols62/cpWaapJuice). <br>
