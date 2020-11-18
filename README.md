@@ -107,7 +107,20 @@ To enable the protections, you need to update the asset within WAAP. Got to Envi
 
 ![](images/infinitynext.PNG)
 
+Once complete, click on "Enforce" and you will be protected. <br>
+
 Configuring WAAP is outside the scope of this article. Documentation for that can be found [HERE](https://sc1.checkpoint.com/documents/Infinity_Portal/WebAdminGuides/EN/Infinity-Next-Admin-Guide/Topics-Infinity-Next/Overview-Infinity-Next.htm) <br>
 
+## CSPM
 
-## Enable CSPM Protection
+Understanding the full capabilities of Check Point CSPM is outside the scope of this article. Please review the documentation located [HERE](https://sc1.checkpoint.com/documents/CloudGuard_Dome9/Documentation/DocHome.html?TocPath=_____1)<br>
+
+I would like to have you examine the Log.IC tab and select the newly created K8 account. This is what you will see:
+
+![](images/logic.PNG)
+
+## Cleanup
+
+To remove the deployment, modify the _destroy_flag and commit the changes.
+
+
