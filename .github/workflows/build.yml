@@ -60,8 +60,8 @@ jobs:
         k8_id=$(curl -X POST https://api.dome9.com/v2/KubernetesAccount  --basic -u ${CSPM_API}:${CSPM_SECRET} -H  'Content-Type: application/json' -H 'Accept: application/json' --data  "{\"name\" : \"${K8_CSPM_NAME}\", "organizationalUnitId" : ${org_id}}" | jq -r '.id')
         helm repo add checkpoint-ea https://raw.githubusercontent.com/CheckPointSW/charts/ea/repository/
         helm install asset-mgmt checkpoint-ea/cp-resource-management --set-string credentials.user=${CSPM_API} --set-string credentials.secret=${CSPM_SECRET} --set-string clusterID=${k8_id} --set addons.imageUploader.enabled=true --set addons.flowLogs.enabled=true   --namespace ${NAMESPACE} --create-namespace
-        curl -X POST 'https://api.dome9.com/v2/KubernetesAccount/vulnerabilityAssessment/enable' --user ${CSPM_API}:${CSPM_SECRET} --header 'Content-Type: application/json' --data '{  "cloudAccountId": ${k8_id},   "enabled": true }'
-        curl -X POST 'https://api.dome9.com/v2/KubernetesAccount/magellan-kubernetes-flowlogs/enable' --user xxxxxxxxxx:yyyyyyyyyyy --header 'Content-Type: application/json' --data '{  "k8sAccountId": ${k8_id},   "enabled": true }'
+        curl -X POST 'https://api.dome9.com/v2/KubernetesAccount/vulnerabilityAssessment/enable' --user ${CSPM_API}:${CSPM_SECRET} --header 'Content-Type: application/json' --data "{ \"cloudAccountId\": ${k8_id},   \"enabled\": true }"
+        curl -X POST 'https://api.dome9.com/v2/KubernetesAccount/magellan-kubernetes-flowlogs/enable' --user ${CSPM_API}:${CSPM_SECRET} --header 'Content-Type: application/json' --data "{  \"k8sAccountId\": ${k8_id},   \"enabled\": true }"
 
         
         
