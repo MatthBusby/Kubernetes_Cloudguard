@@ -1,7 +1,7 @@
 # Kubernetes + Cloudguard
 Written by Michael Braun
 
-![CI](https://github.com/metalstormbass/Kubenetes_Cloudguard/workflows/build/badge.svg?event=push)
+![Build](https://github.com/metalstormbass/Kubernetes_Cloudguard/workflows/Build/badge.svg?event=push)
 
 <p align="left">
     <img src="https://img.shields.io/badge/Version-1.0.0-green" />
