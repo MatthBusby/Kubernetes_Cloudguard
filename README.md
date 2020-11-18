@@ -33,5 +33,60 @@ The destroy pipeline performs the following actions: <br>
 <b> Get started by Forking this responsitory!</b>
 
 ## Prerequisites
+In order to run this demo, you need the following:
 
+[Github Account](https://github.com) <br>
+[Azure Account](https://portal.azure.com) <br>
+[Check Point Cloud Security Posture Management Account](https://secure.dome9.com/) <br>
+[Check Point Cloud Portal](https://portal.checkpoint.com) -  WAAP Token <br>
 
+## Setup
+
+For all components in this demo to work, you must have Log.IC enabled for Kubernets in Check Point CSPM. <br>
+<b> Note: This was designed for Check Point employees.</b> If you want to run the CI/CD pipeline and you are not a Checkpoint employee, you will need to modify line 58 in the [build.yml](.github/workflows/build.yml)
+
+### Microsoft Azure
+
+Create an App Registration in Azure. As this will be used multiple times, please note the following:
+
+- Application (client) ID <br>
+- Directory (tenant) ID <br>
+- Secret <br>
+- Subscription ID <br>
+
+Ensure that you give this app registration "Contributor" permission. 
+
+### Setup Github Environment
+
+Examing the [build.yml](.github/workflows/build.yml) file. You must create secrets for each one of the variables.
+
+```
+      WAAP_TOKEN: ${{ secrets.WAAP_TOKEN }}
+      CSPM_API: ${{ secrets.CSPM_API }}
+      CSPM_SECRET: ${{ secrets.CSPM_SECRET }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      AZ_RG: ${{ secrets.AZ_RG }}
+      AZ_LOCATION: ${{ secrets.AZ_LOCATION }}
+      URL_SUFFIX: ${{ secrets.URL_SUFFIX }}
+      CLUSTER_NAME: ${{ secrets.CLUSTER_NAME }}
+      K8_CSPM_NAME: ${{ secrets.K8_CSPM_NAME }}
+      NAMESPACE: ${{ secrets.NAMESPACE }}
+      ORG_NAME: "WAAP_JUICE_K8"
+```
+WAAP_TOKEN: The token generated for WAAP in the Infinity Next console.<br>
+CSPM_API: API Key for CSPM <br>
+CSPM_SECRET: API Secret for CSPM <br>
+AZURE_SUBSCRIPTION_ID: Azure Subscription ID <br>
+AZURE_TENANT_ID: Azure Tenant ID <br>
+AZURE_CLIENT_ID: Azure Client ID <br>
+AZURE_CLIENT_SECRET: Azure Client Secret <br>
+AZ_RG: Name of the resource group to be created <br>
+AZ_LOCATION: Azure region for resources to be built in. Ex: West US 2 <br>
+URL_SUFFIX: This must have a value of: cloudapp.azure.com <br>
+CLUSTER_NAME: Define a name for the K8 cluster<br>
+K8_CSPM_NAME: Define a name for the object within CSPM <br>
+NAMESPACE: Define a namespace <br>
+ORG_NAME: This will be the name of the organizational unit created within CPSM <br>
