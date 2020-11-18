@@ -105,7 +105,7 @@ YOUR_NAMESPACE.YOUR_LOCATION.cloudapp.azure.com
 
 To enable the protections, you need to update the asset within WAAP. Got to Environment > Assets and update the URL to the value defined above.
 
-![](image/infinitynext.PNG)
+![](images/infinitynext.PNG)
 
 Configuring WAAP is outside the scope of this article. Documentation for that can be found [HERE](https://sc1.checkpoint.com/documents/Infinity_Portal/WebAdminGuides/EN/Infinity-Next-Admin-Guide/Topics-Infinity-Next/Overview-Infinity-Next.htm) <br>
 
