@@ -42,7 +42,7 @@ In order to run this demo, you need the following:
 
 ## Setup
 
-For all components in this demo to work, you must have Log.IC enabled for Kubernets in Check Point CSPM. <br>
+For all components in this demo to work, you must have Log.IC enabled for Kubernets in Check Point CSPM. <br><br>
 <b> Note: This was designed for Check Point employees.</b> If you want to run the CI/CD pipeline and you are not a Checkpoint employee, you will need to modify line 58 in the [build.yml](.github/workflows/build.yml)
 
 ### Microsoft Azure
@@ -57,6 +57,8 @@ Create an App Registration in Azure. As this will be used multiple times, please
 Ensure that you give this app registration "Contributor" permission. 
 
 ### Setup Github Environment
+
+Start by enabling workflows in the "Actions" tab. <br>
 
 Examing the [build.yml](.github/workflows/build.yml) file. You must create secrets for each one of the variables.
 
@@ -76,6 +78,8 @@ Examing the [build.yml](.github/workflows/build.yml) file. You must create secre
       NAMESPACE: ${{ secrets.NAMESPACE }}
       ORG_NAME: "WAAP_JUICE_K8"
 ```
+#### Variable Functions
+
 WAAP_TOKEN: The token generated for WAAP in the Infinity Next console.<br>
 CSPM_API: API Key for CSPM <br>
 CSPM_SECRET: API Secret for CSPM <br>
@@ -90,3 +94,20 @@ CLUSTER_NAME: Define a name for the K8 cluster<br>
 K8_CSPM_NAME: Define a name for the object within CSPM <br>
 NAMESPACE: Define a namespace <br>
 ORG_NAME: This will be the name of the organizational unit created within CPSM <br>
+
+## Build the Environment
+
+Modify the _build_flag and commit the changes to trigger a build. Once complete, you will be able to access the new website at the following address:<br>
+
+YOUR_NAMESPACE.YOUR_LOCATION.cloudapp.azure.com
+
+## Enable WAAP Protections
+
+To enable the protections, you need to update the asset within WAAP. Got to Environment > Assets and update the URL to the value defined above.
+
+![](image/infinitynext.PNG)
+
+Configuring WAAP is outside the scope of this article. Documentation for that can be found [HERE](https://sc1.checkpoint.com/documents/Infinity_Portal/WebAdminGuides/EN/Infinity-Next-Admin-Guide/Topics-Infinity-Next/Overview-Infinity-Next.htm) <br>
+
+
+## Enable CSPM Protection
